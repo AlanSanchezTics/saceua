@@ -1,0 +1,88 @@
+/*header*/
+        .navbar{
+            margin-bottom: 0;
+        }
+        .jumbotron{
+            background: #007bff;
+            color: white;
+            padding: 10px 0px;
+            text-align: center; 
+            margin-bottom: 0;
+        }
+.dropdown-submenu .dropdown-menu { 
+ 
+    top: 0; 
+ 
+    left: 80%; 
+ 
+    margin-left: .1rem; 
+ 
+    margin-right: .1rem; 
+ 
+}   
+        .jumbotron .form{
+          width: 700px;
+    margin: 3px;  
+        }
+        .form{
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 17px;
+            width: 500px;
+            margin: 3px;
+            position: relative;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -10%);
+    
+            }
+			.cuerpo{
+				background: #007bff;
+            color: white;
+            padding: 10px 0px;
+            text-align: center; 
+            margin-bottom: 0;
+			}
+			
+			.form-datos{
+				border: 2px solid #ccc;
+            border-radius: 30px;
+            padding: 20px;
+            width: 750px;
+            margin: 3px;
+            position: relative;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -1%);
+			}
+			
+        .nav li ul{
+ display:  none;
+}
+
+.nav li:hover > ul{
+ display:  block;
+}
+        footer{
+    background: #1F4060;
+    color: #fff;
+}
+footer .contenedor{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+        
+    #cajagrande{
+  display: inline-block;
+  min-width: 500px;
+} 
+
+input{float:center;
+width:100px;
+margin-bottom:0px; }
+#espacioinput{margin: .4em 0;
+width: 49%;
+display: inline-block;}*/
