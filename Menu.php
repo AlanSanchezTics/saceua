@@ -27,10 +27,9 @@
                           <li class='active'><a href='VistaControlEscolar.php'>Inicio</a></li>
                           <li class='dropdown'>
                             <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button'>
-                                Pago Servicios <span class='caret'></span></a>
+                                Caja<span class='caret'></span></a>
                               <ul class='dropdown-menu' role='menu'>
-                                  <li><a href='Carrera.php'>Ver Servicios</a></li>
-                                  <li><a href='Carrera.php'>Pagar servicio</a></li>
+                                  <li><a href='pagar-servicio.php'>Pagar servicio</a></li>
                             </ul>
                                   
                           </li>
@@ -38,14 +37,15 @@
                             <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button'>
                                 Reportes <span class='caret'></span></a>
                               <ul class='dropdown-menu' role='menu'>
-                                  <li><a href='materia.php'>Generar reportes</a></li>
+                                  <li><a>Ver reportes generados</a></li>
+                                  <li><a href='generar-reportes.php'>Generar reportes</a></li>
                             </li>
                           </ul>
                           <li class='dropdown'>
                             <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button'>
                                 Servicios <span class='caret'></span></a>
                               <ul class='dropdown-menu' role='menu'>
-                                  <li><a href='Periodo.php'>Servicios Disponibles</a></li>
+                                  <li><a href='Periodo.php'>Ver servicios</a></li>
                                   <li><a href='AgregarPeriodo.php'>Agregar Servicio</a></li>
                                   
                               </ul>
@@ -54,13 +54,18 @@
                             <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button'>
                                 Numeros Contables <span class='caret'></span></a>
                               <ul class='dropdown-menu' role='menu'>
-                                  <li class='dropdown dropdown-submenu'>
                                   <li><a href='Carrera.php'>Ver Numeros Asignados</a></li>
-                                      <li><a href='Carrera.php'>Asignar numero contable</a></li>
-                                  </li>
+                                  <li><a href='Carrera.php'>Asignar numero contable</a></li>
                                 </ul>
                           </li>
-                       
+                          <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                                Becas <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Ver Alumnos Becados</a></li>
+                                    <li><a href="#">Asignar Becas</a></li>
+                                </ul>
+                          </li>
                             <li class='dropdown'>
                             <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button'>
                                 Sesión <span class='caret'></span></a>
@@ -68,8 +73,8 @@
                                   <li><a href='CerrarSesion.php'>Salir</a></li>
                                   </ul>
                           </li>
-                      </ul>
-                      </div>
+                        </ul>
+                    </div>
               </div>
           </nav>
       </header>
