@@ -8,8 +8,8 @@ $mysqli = new mysqli("www.ceuarkos.edu.mx:3306","ceuarkos","C3u4rk@s2018","ceuar
 $consulta = "SELECT tblbecas.idbeca,tblalumno.NombreAlu,tblbecas.porcentaje,tblperiodo.NombrePeriodo,tblperiodo.ano FROM tblbecas,tblalumno,tblperiodo where tblbecas.idAlumno=tblalumno.IdAlumno and tblbecas.idPeriodo=tblperiodo.IdPeriodo and tblbecas.status=1;";
 $resultado = mysqli_query( $mysqli, $consulta );
 echo "
-<table class='table table-hover'>
-  <thead class='thead-dark'>
+<table class='table table-hover  table-striped'>
+  <thead class='thead-light'>
     <tr>
       <th scope='col'># Beca</th>
       <th scope='col'>Nombre Alumno</th>
@@ -25,7 +25,7 @@ while($columna = mysqli_fetch_array( $resultado )){
 		<tr>
             <td>".$columna[0]."</td>
             <td>".$columna[1]."</td>
-            <td>".$columna[2]."</td>
+            <td>".$columna[2]."%</td>
             <td>".$columna[3]."</td>
             <td>".$columna[4]."</td>
 		</tr>";

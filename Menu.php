@@ -62,8 +62,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                                 Becas <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href='becas/frm_listadebecas.php'>Ver Alumnos Becados</a></li>
-                                    <li><a href='becas/frm_listadebecas.php'>Asignar Becas</a></li>
+                                    <li><a href='becas/frm_listadebecas.php' target='frame'>Ver Alumnos Becados</a></li>
+                                    <li><a href='becas/frm_listadebecas.php' target='frame'>Asignar Becas</a></li>
                                 </ul>
                           </li>
                             <li class='dropdown'>

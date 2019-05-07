@@ -7,6 +7,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Bienvenido a SACEUA</title>
+
+    
     <!-- Bootstrap core CSS -->
       <link href="./Estilos/dist/css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -20,19 +22,15 @@
       <?php
           include 'Menu.php'; 
        ?>
-      <section class="jumbotron">
-          <div class="container">
-              <br>
-              <br>
-              <h1> BIENVENIDO A SACEUA!</h1>
-              
-              <br>
-          </div>
-          <img style="width:400px; height:400px;" src="./imagenes/Logoarkos.png">
-      </section>
-      
+       
+       <div class="embed-responsive embed-responsive-16by9">
+       <iframe height="100%" width="100%" name= "frame" frameborder="0" src="rellenohome.php" scrolling="si">
+            </iframe> 
+</div>            
+
+
       <footer>
-            <div class="contenedor">
+            <div class="contenedor" >
                 <p >Copyright &copy; BCB</p>
             </div>           
        </footer>
