@@ -1,22 +1,4 @@
 <?php
-
-    $hostname="localhost";
-	$username="root";
-	$password="";
-	$dbname="ceuarkos_saceua123";
-		
-	mysql_connect($hostname,$username, $password);
-	mysql_select_db($dbname);
-	
-	
-	$query = “SELECT *FROM tbl_alumno”;	
-	$result = mysql_query($query);
-	
-	si($result){
-		while($row = mysql_fetch_array($result)){
-			$name = $row["NombreAlu"];
-			echo "Nombre: ".$name."br/>";
-		}
-	}
-
+	$conn = new mysqli("www.ceuarkos.edu.mx:3306","ceuarkos","C3u4rk@s2018","ceuarkos_saceua_caja");
+	$tildes = $conn -> query("SET NAMES 'utf8'");
 ?>

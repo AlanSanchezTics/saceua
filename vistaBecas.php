@@ -1,3 +1,6 @@
+<?php
+    include 'conexion.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Bienvenido a SACEUA</title>
+    <title>Lista de Alumnos becados</title>
 
     
     <!-- Bootstrap core CSS -->
@@ -23,16 +26,7 @@
           include 'Menu.php'; 
        ?>
       
-      <section class="jumbotron">
-          <div class="container">
-              <br>
-              <br>
-              <h1> BIENVENIDO A SACEUA!</h1>
-              
-              <br>
-          </div>
-          <img style="width:400px; height:400px;" src="./imagenes/Logoarkos.png">
-      </section>
+
       <footer>
             <div class="contenedor" >
                 <p >Copyright &copy; BCB</p>
