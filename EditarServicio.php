@@ -1,5 +1,17 @@
 <?php
     include 'conexion.php';
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
+        $result = mysqli_query($conn,"Select * FROM tblservicios where idservicio=".$id);
+        if(!$result){
+                echo "error de consulta: ".mysqli_error();
+                exit();
+        }else{
+            $row = mysqli_fetch_row($result);
+        }
+    }else{  
+        header('Location: VistaServicios.php');
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,21 +44,22 @@
             <p class="lead">Sistema Academico de Centro de Estudio Universitario ARKOS</p><br>
         </div>
         <hr>
-        <p class="lead">Registro de nuevo servicio</p>
+        <p class="lead">editar servicio</p>
         <hr>
     </section>
     <section class="cuerpo">
         <div class="container">
             <form class="form-datos" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" role="form">
-                <span style="font-weight:bold;color:#000080;">Informacion de registro&nbsp;</span>
+                <span style="font-weight:bold;color:#000080;">Datos del servicio&nbsp;</span>
                 <hr/>
                 <label for="nombre" class="col-lg-3 control-label">Nombre de servicio:</label>
                 <div class="col-lg-9">
-                    <input type="text" placeholder="Nombre" name="name" class="form-control" id="nombre" required><br>
+                    <input type="hidden" name="idservicio" value="<?php echo $row[0]; ?>">
+                    <input type="text" placeholder="Nombre" name="name" value="<?php echo $row[1]; ?>" class="form-control" id="nombre" required><br>
                 </div>
                 <label class="col-lg-3 control-label">Costo:</label>
                 <div class="col-lg-9">
-                    <input type="tel" placeholder="Costo" name="costo" class="form-control" id="costo" pattern="^[0-9]+([.][0-9]+)?$" required><br>
+                    <input type="tel" placeholder="Costo" name="costo" value="<?php echo $row[2]; ?>" class="form-control" id="costo" pattern="^[0-9]+([.][0-9]+)?$" required><br>
                 </div>
                 <hr>
                 <br><br>
@@ -57,33 +70,19 @@
     </section>
     <?php
         if(isset($_POST["enviar"])){
+            $idservicio = $_POST["idservicio"];
             $servicio = $_POST["name"];
             $costo = $_POST["costo"];
 
-            $sql = "INSERT INTO tblservicios(nombre_servicio, costo_servicio, status) VALUE('{$servicio}', {$costo},1)";
+            $sql = "UPDATE tblservicios SET nombre_servicio = '{$servicio}', costo_servicio = {$costo} WHERE idservicio = {$idservicio}";
             $result = mysqli_query($conn, $sql);
 
             if($result){
                 ?>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.1/jquery.jgrowl.min.css"
-    />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.1/jquery.jgrowl.min.js"></script>
     <script>
-        $.jGrowl("EL REGISTRO SE GUARDO CON EXITO!", {
-            life: 3000,
-            position: 'bottom-right',
-            theme: 'test'
-        });
+        alert("Servicio Actualizado con exito.");
+        window.location.href='VistaServicios.php';
     </script>
-    <style>
-        .test {
-            background-color: #31B404;
-            width: 300px;
-            height: 80px;
-            text-align: center;
-        }
-    </style>
     <?php
             }
         }
