@@ -46,7 +46,7 @@
                                 Servicios <span class='caret'></span></a>
                               <ul class='dropdown-menu' role='menu'>
                                   <li><a href='vistaServicios.php'>Ver servicios</a></li>
-                                  <li><a href='gestionservicios/frm_listadogestionservicios.php'>Agregar Servicio</a></li>
+                                  <li><a href='AgregarServicio.php'>Agregar Servicio</a></li>
                                   
                               </ul>
                           </li>
