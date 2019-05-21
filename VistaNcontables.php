@@ -60,9 +60,17 @@
                 <table class="table table-hover">
                     <thead>
                         <tr align='center' class='table table-hover'>
-                            <th>#</th>
+                            <th>Número de control</th>
                             <th>Nombre</th>
-                            <th>Costo</th>
+                            <th>No. Contable</th>
+                            <th>Telefono Personal</th>
+                            <th>Telefono Celular</th>
+                            <th>Carrera</th>
+                            <th>Nombre Del Periodo</th>
+                            <th>Año</th>
+                            <th></th>
+
+
                             <th></th>
                         </tr>
                     </thead>
@@ -70,7 +78,11 @@
                         <?php
                             include 'conexion.php';
 
-                            $sql = "SELECT * FROM tblnocontables WHERE status = 1";
+                            $sql = "SELECT tblalumno.numcontrol,tblalumno.NombreAlu,tblnocontables.nocontable,tblalumno.TelefonoPersonal,tblalumno.Cel,
+                            tblcarrera.NomCarrera,tblperiodo.NombrePeriodo, tblperiodo.ano FROM tblalumno,tblcarrera,tblperiodo,tblnocontables 
+                            where tblalumno.IdCarrera=tblcarrera.IdCarrera and 
+                            tblalumno.Periodo=tblperiodo.IdPeriodo and tblalumno.IdAlumno=tblnocontables.idAlumno";
+
                             $result = mysqli_query($conn, $sql);
 
                             while ($reg = mysqli_fetch_array($result)) {
@@ -78,8 +90,15 @@
                                 <tr>
                                     <th scope="row">'.$reg[0].'</th>
                                     <td>'.$reg[1].'</td>
-                                    <td> $'.$reg[2].'</td>
-                                    <td><a style="margin:3px" class="btn btn-danger" href=EliminaServicio.php?id='.$reg[0].' data-confirm="¿Está seguro de que desea eliminar el servicio seleccionado?"><font color="#ffffff">Eliminar</font</a> <a style="margin:3px" class="btn btn-primary" href=EditarServicio.php?id='.$reg[0].'&IdUsuario='.$reg[0].'><font color="#ffffff">Editar</font></a></td>
+                                    <td> '.$reg[2].'</td>
+                                    <td> '.$reg[3].'</td>
+                                    <td> '.$reg[4].'</td>
+                                    <td> '.$reg[5].'</td>
+                                    <td> '.$reg[6].'</td>
+                                    <td> '.$reg[7].'</td>
+                                    <td><a style="margin:3px" class="btn btn-danger" href=EliminaServicio.php?id='.$reg[0].' data-confirm="¿Está seguro de que desea eliminar el servicio seleccionado?"><font color="#ffffff">Eliminar</font</a></td> 
+                                    
+                                    
                                 </tr>';
                             }
                         ?>
@@ -103,16 +122,7 @@
         </script>
 
     </section>
-<section class="cuerpo">
-        <div class="container">
-            <center>
-                <a href="AgregarServicio.php" align="center">
-                    <button type="submit" class="btn btn-nuevo">Agregar Servicio </button>
-                </a>
-            </center>
-        </div>
 
-    </section>
     <footer>
         <div class="contenedor">
             <p>Copyright &copy; BCB</p>
