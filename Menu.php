@@ -55,7 +55,7 @@
                                 Numeros Contables <span class='caret'></span></a>
                               <ul class='dropdown-menu' role='menu'>
                                   <li><a href='VistaNcontables.php'>Ver Numeros Asignados</a></li>
-                                  <li><a href='numeroscontables/frm_listadenumeroscontables.php'>Asignar numero contable</a></li>
+                                  <li><a href='vistaAsignarNContables.php'>Asignar numero contable</a></li>
                                 </ul>
                           </li>
                           <li class="dropdown">
