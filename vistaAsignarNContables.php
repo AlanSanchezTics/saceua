@@ -18,7 +18,6 @@
     <meta name="author" content="">
     <title>SACEUA | Lista De Numeros Contables No Asignados</title>
 
-
     <!-- Bootstrap core CSS -->
     <link href="./Estilos/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
