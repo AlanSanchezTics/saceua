@@ -1,11 +1,5 @@
 <?php
     include 'conexion.php';
-    
-    if(isset($_POST["nocontrol"])){
-        echo('SI');
-    }else{
-        echo ('NO');
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +22,23 @@
 </head>
 
 <body>
+    <script>
+    window.addEventListener("load", function() {
+  miformulario.nocontrol.addEventListener("keypress", soloNumeros, false);
+});
+
+function soloNumeros(e){
+  var key = window.event ? e.which : e.keyCode;
+  if (key < 48 || key > 57) {
+    e.preventDefault();
+  }
+}
+
+
+    </script> 
+
+
+
     <?php
           include 'Menu.php'; 
        ?>
@@ -43,11 +54,11 @@
         <div class="row">
             <div class="col-12 col-md-12">
                 <hr>
-                <form action='vistaAsignarNContables.php' method='post' class='navbar-form navbar-center' role='search'>
+                <form name="miformulario" action='vistaAsignarNContables.php' method='post' class='navbar-form navbar-center' role='search'>
                     <div class='form-group'>
                         <label for="nombre">Buscador:</label>
                         <input id="nocontrol" name= "nocontrol" type="text" class="form-control" placeholder="Numero De Control" aria-label="Servicio" aria-describedby="basic-addon1">
-                        <input text="Buscar" type="submit">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
                     </div>
                 </form>
                 <hr>
@@ -69,6 +80,46 @@
                         </tr>
                     </thead>
                     <tbody class="BusquedaRapida">
+                    <?php
+    
+    if(isset($_POST["nocontrol"])){
+            
+    if(is_null($_POST["nocontrol"]) || empty($_POST["nocontrol"])){
+       
+   }else{   
+
+    $nocontrol=$_POST["nocontrol"];
+    $sql = "SELECT tblalumno.numcontrol,tblalumno.NombreAlu,tblalumno.TelefonoPersonal,
+    tblalumno.Cel, tblcarrera.NomCarrera,tblperiodo.NombrePeriodo, tblperiodo.ano FROM 
+    tblalumno,tblcarrera,tblperiodo where tblalumno.IdCarrera=tblcarrera.IdCarrera and 
+    tblalumno.Periodo=tblperiodo.IdPeriodo and tblalumno.numcontrol=$nocontrol";
+
+                        $result = mysqli_query($conn, $sql);
+                        $num_rows = mysqli_num_rows($result);
+                        
+                        if($num_rows<=0){                           
+                            echo '<script language="javascript">
+                            alert("Alumno No Encontrado")
+                           </script>';                           
+                        }
+
+                        while ($reg = mysqli_fetch_array($result)) {
+                            echo '
+                            <tr>
+                                <th scope="row">'.$reg[0].'</th>
+                                <td>'.$reg[1].'</td>
+                                <td> No Asignado </td>
+                                <td> '.$reg[2].'</td>
+                                <td> '.$reg[3].'</td>
+                                <td> '.$reg[4].'</td>
+                                <td> '.$reg[5].'</td>
+                                <td> '.$reg[6].'</td>
+                                <td><a style="margin:3px" class="btn btn-danger" href=EliminaServicio.php?id='.$reg[0].' data-confirm="¿Está seguro de que desea eliminar el servicio seleccionado?"><font color="#ffffff">Eliminar</font</a></td>                               
+                            </tr>';      
+    }
+}
+}
+?>
                        
                     </tbody>
                 </table>
