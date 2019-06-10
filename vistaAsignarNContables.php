@@ -1,5 +1,20 @@
 <?php
     include 'conexion.php';
+
+    if(isset($_GET['nnocontable']) || isset($_GET['nnocontrol'])){
+    $numerodecontrol=$_GET['nocontrol'];
+    $numerocontablel=$_GET['nnocontable'];
+    var_dump($nnocontable);
+
+    $sql = "insert into t";
+    $result = mysqli_query($conn, $sql);
+
+
+    };
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +37,11 @@
 </head>
 
 <body>
+
+
+
+
+
     <script>
     window.addEventListener("load", function() {
   miformulario.nocontrol.addEventListener("keypress", soloNumeros, false);
@@ -33,12 +53,7 @@ function soloNumeros(e){
     e.preventDefault();
   }
 }
-
-
     </script> 
-
-
-
     <?php
           include 'Menu.php'; 
        ?>
@@ -87,8 +102,27 @@ function soloNumeros(e){
     if(is_null($_POST["nocontrol"]) || empty($_POST["nocontrol"])){
        
    }else{   
+    
+
+
+
+
+
 
     $nocontrol=$_POST["nocontrol"];
+
+    $sql = "SELECT tblnocontables.nocontable from tblnocontables,tblalumno where tblalumno.numcontrol=$nocontrol and tblalumno.idalumno=tblnocontables.idalumno and tblnocontables.status=1";
+                        $result = mysqli_query($conn, $sql);
+                        $num_rows = mysqli_num_rows($result);
+                        if($num_rows<=0){
+                            $nocontablesql=mysqli_fetch_array($result);                                                     
+                            $isassgigned="No Asignado";                            
+                        }else{
+                            $nocontablesql=mysqli_fetch_array($result);
+                            $isassgigned=$nocontablesql[0];
+                        }
+
+
     $sql = "SELECT tblalumno.numcontrol,tblalumno.NombreAlu,tblalumno.TelefonoPersonal,
     tblalumno.Cel, tblcarrera.NomCarrera,tblperiodo.NombrePeriodo, tblperiodo.ano FROM 
     tblalumno,tblcarrera,tblperiodo where tblalumno.IdCarrera=tblcarrera.IdCarrera and 
@@ -101,22 +135,23 @@ function soloNumeros(e){
                             echo '<script language="javascript">
                             alert("Alumno No Encontrado")
                            </script>';                           
-                        }
+                        }else{                       
 
                         while ($reg = mysqli_fetch_array($result)) {
                             echo '
                             <tr>
                                 <th scope="row">'.$reg[0].'</th>
                                 <td>'.$reg[1].'</td>
-                                <td> No Asignado </td>
+                                <td> '.$isassgigned.' </td>
                                 <td> '.$reg[2].'</td>
                                 <td> '.$reg[3].'</td>
                                 <td> '.$reg[4].'</td>
                                 <td> '.$reg[5].'</td>
                                 <td> '.$reg[6].'</td>
-                                <td><a style="margin:3px" class="btn btn-danger" href=EliminaServicio.php?id='.$reg[0].' data-confirm="¿Está seguro de que desea eliminar el servicio seleccionado?"><font color="#ffffff">Eliminar</font</a></td>                               
+                                <td><a style="margin:3px" class="btn btn-primary" href='.$reg[0].' data-confirm="¿Está seguro de que desea eliminar el servicio seleccionado?"><font color="#ffffff">Asignar Nuevo No. Contable</font</a></td>                               
                             </tr>';      
     }
+}
 }
 }
 ?>
@@ -129,10 +164,15 @@ function soloNumeros(e){
             $(document).ready(function () {
                 $('a[data-confirm]').click(function (ev) {
                     var href = $(this).attr('href');
-                    if (!$('#confirm-delete').length) {
-                        $('body').append('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-danger text-white">ELIMINAR SERVICIO<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">¿Está seguro de que desea eliminar el servicio seleccionado?</div><div class="modal-footer"><button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button><a class="btn btn-danger text-white" id="dataComfirmOK">Eliminar alumno</a></div></div></div></div>');
-                    }
-                    $('#dataComfirmOK').attr('href', href);
+                    
+                      if (!$('#confirm-delete').length) {
+                          
+                        $('body').append('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-primary text-white">Añadir Numero Contable<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><input id="nnocontable" name= "nnocontable" type="text" class="form-control" placeholder="Ingrese Nuevo Numero Contable"></input></div><div class="modal-footer"><button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button><a href="vistaAsignarNContables?nnocontrol=" class="btn btn-success text-white" id="dataComfirmOK">Guardar Numero Contable</a></div></div></div></div>');
+                        
+                    
+                    
+                    }                                                      
+                    $('#dataComfirmOK').attr('href',href);
                     $('#confirm-delete').modal({ show: true });
                     return false;
 
