@@ -1,20 +1,36 @@
 <?php
     include 'conexion.php';
 
-    if(isset($_GET['nnocontable']) || isset($_GET['nnocontrol'])){
-    $numerodecontrol=$_GET['nocontrol'];
-    $numerocontablel=$_GET['nnocontable'];
-    var_dump($nnocontable);
+    if(isset($_POST['cntbl']) && isset($_POST['ctrl'])){
+    $numerodecontrol=$_POST['ctrl'];
+    $numerocontable=$_POST['cntbl'];
 
-    $sql = "insert into t";
+    $sql = "SELECT idalumno from tblalumno where numcontrol=$numerodecontrol and status=1";
     $result = mysqli_query($conn, $sql);
-
-
+    $idalumno = mysqli_fetch_array($result);  
+    
+    $sql = "SELECT tblnocontables.nocontable,tblnocontables.idalumno from tblnocontables,tblalumno where tblalumno.numcontrol=$numerodecontrol 
+    and tblnocontables.idalumno=tblalumno.idalumno and tblnocontables.status=1";
+    $result = mysqli_query($conn, $sql);
+    $hayono = mysqli_num_rows($result);    
+        if($hayono>0){            
+            $sql = "UPDATE tblnocontables SET nocontable =$numerocontable WHERE tblnocontables.idAlumno=$idalumno[0]";
+            $result = mysqli_query($conn, $sql);
+            if($result){
+                echo "<script type='text/javascript'>alert('Numero Contable Actualizado Correctamente');</script>";
+            }else{
+                echo "<script type='text/javascript'>alert('No Se Pudo Actualizar Numero Contable');</script>";
+            }      
+        }else{
+            $sql = "insert into tblnocontables(nocontable,IdAlumno,status) values($numerocontable,$idalumno[0],1)";
+            $result = mysqli_query($conn, $sql);
+            if($result){
+                echo "<script type='text/javascript'>alert('Numero Contable Asignado Correctamente');</script>";
+            }else{
+                echo "<script type='text/javascript'>alert('No Se Pudo Asignar Numero Contable');</script>";
+            }              
+        }
     };
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,17 +50,46 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/contact.js"></script>
 </head>
 
 <body>
 
 
-
-
-
+<div id="contact-modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<a class="close" data-dismiss="modal">×</a>
+				<h3>Asignar Nuevo Numero Contable</h3>
+			</div>
+			<form id="contactForm" name="contact" role="form" method="POST">
+				<div class="modal-body">				
+					<div class="form-group">
+						<label for="name">Ingrese Numero Contable</label>
+						<input type="text" name="cntbl" id="cntbl" class="form-control">
+                        <input type="hidden" name="ctrl" id="ctrl" class="form-control">
+					</div>
+								
+				</div>
+				<div class="modal-footer">					
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<input type="submit" class="btn btn-primary" id="submit" value="Asignar">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
     <script>
     window.addEventListener("load", function() {
   miformulario.nocontrol.addEventListener("keypress", soloNumeros, false);
+  contact.cntbl.addEventListener("keypress", soloNumeros, false);
 });
 
 function soloNumeros(e){
@@ -89,8 +134,6 @@ function soloNumeros(e){
                             <th>Nombre Del Periodo</th>
                             <th>Año</th>
                             <th></th>
-
-
                             <th></th>
                         </tr>
                     </thead>
@@ -100,15 +143,7 @@ function soloNumeros(e){
     if(isset($_POST["nocontrol"])){
             
     if(is_null($_POST["nocontrol"]) || empty($_POST["nocontrol"])){
-       
-   }else{   
-    
-
-
-
-
-
-
+          }else{    
     $nocontrol=$_POST["nocontrol"];
 
     $sql = "SELECT tblnocontables.nocontable from tblnocontables,tblalumno where tblalumno.numcontrol=$nocontrol and tblalumno.idalumno=tblnocontables.idalumno and tblnocontables.status=1";
@@ -148,7 +183,7 @@ function soloNumeros(e){
                                 <td> '.$reg[4].'</td>
                                 <td> '.$reg[5].'</td>
                                 <td> '.$reg[6].'</td>
-                                <td><a style="margin:3px" class="btn btn-primary" href='.$reg[0].' data-confirm="¿Está seguro de que desea eliminar el servicio seleccionado?"><font color="#ffffff">Asignar Nuevo No. Contable</font</a></td>                               
+                                <td><button id="btnasign" type="button" data-toggle="modal" data-target="#contact-modal" style="margin:3px" class="btn btn-primary" href='.$reg[0].'><font color="#ffffff">Asignar Nuevo No. Contable</font</button></td>                               
                             </tr>';      
     }
 }
@@ -157,28 +192,17 @@ function soloNumeros(e){
 ?>
                        
                     </tbody>
+
+                    <script>
+                    $( "#btnasign" ).click(function() {
+                           var href =$("#btnasign").attr("href");
+                           $("#ctrl").val(href);
+                    });
+                    </script>
                 </table>
             </div>
         </div>
-        <script>
-            $(document).ready(function () {
-                $('a[data-confirm]').click(function (ev) {
-                    var href = $(this).attr('href');
-                    
-                      if (!$('#confirm-delete').length) {
-                          
-                        $('body').append('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-primary text-white">Añadir Numero Contable<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><input id="nnocontable" name= "nnocontable" type="text" class="form-control" placeholder="Ingrese Nuevo Numero Contable"></input></div><div class="modal-footer"><button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button><a href="vistaAsignarNContables?nnocontrol=" class="btn btn-success text-white" id="dataComfirmOK">Guardar Numero Contable</a></div></div></div></div>');
-                        
-                    
-                    
-                    }                                                      
-                    $('#dataComfirmOK').attr('href',href);
-                    $('#confirm-delete').modal({ show: true });
-                    return false;
-
-                });
-            });
-        </script>
+        
 
     </section>
 
@@ -188,8 +212,5 @@ function soloNumeros(e){
         </div>
     </footer>
     <!-- Bootstrap core JavaScript -->
-    <script src="./Estilos/dist/js/jquery.js"></script>
-    <script src="./Estilos/dist/js/bootstrap.min.js"></script>
-</body>
-
+   </body>
 </html>
