@@ -41,7 +41,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SACEUA | Lista De Numeros Contables No Asignados</title>
+    <title>SACEUA | Pagar Servicios</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./Estilos/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -51,15 +51,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!--
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/contact.js"></script>
-
-
 -->
+
 </head>
 
 <body>
@@ -109,15 +107,15 @@ function soloNumeros(e){
         <div class="container">
             <h1>SACEUA</h1>
             <p class="lead">Sistema Academico de Centro de Estudio Universitario ARKOS</p><br>
-            <p class="lead">Numeros Contables</p>
+            <p class="lead">Pago De Servicios</p>
         </div>
         <hr>
         
-        <p class="lead">Numeros Contables Asignados</p>
+        <p class="lead">Busqueda De Alumnos</p>
         <div class="row">
             <div class="col-12 col-md-12">
                 <hr>
-                <form name="miformulario" action='vistaAsignarNContables.php' method='post' class='navbar-form navbar-center' role='search'>
+                <form name="miformulario" action='vistaPagarServicio.php' method='post' class='navbar-form navbar-center' role='search'>
                     <div class='form-group'>
                         <label for="nombre">Buscador:</label>
                         <input id="nocontrol" name= "nocontrol" type="text" class="form-control" placeholder="Numero De Control" aria-label="Servicio" aria-describedby="basic-addon1">
@@ -127,17 +125,19 @@ function soloNumeros(e){
                 <hr>
                 <table class="table table-hover">
                     <thead>
-                        <tr align='center' class='table table-hover'>
-                            <th>Número de control</th>
-                            <th>Nombre</th>
-                            <th>No. Contable</th>
-                            <th>Telefono Personal</th>
-                            <th>Telefono Celular</th>
-                            <th>Carrera</th>
-                            <th>Nombre Del Periodo</th>
-                            <th>Año</th>
-                            <th></th>
-                            <th></th>
+                        <tr class='table table-hover'>
+                            <th class="text-center">Número de control</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">No. Contable</th>
+                            <th class="text-center">Carrera</th>
+                            <th class="text-center">Nombre Del Periodo</th>
+                            <th class="text-center">Reinscripcion</th>
+                            <th class="text-center">Enero</th>
+                            <th class="text-center">Febrero</th>
+                            <th class="text-center">Marzo</th>
+                            <th class="text-center">Abril</th>
+                            <th class="text-center" colspan="2">Observaciones</th>
+                                                    
                         </tr>
                     </thead>
                     <tbody class="BusquedaRapida">
@@ -182,11 +182,75 @@ function soloNumeros(e){
                                 <td>'.$reg[1].'</td>
                                 <td> '.$isassgigned.' </td>
                                 <td> '.$reg[2].'</td>
-                                <td> '.$reg[3].'</td>
-                                <td> '.$reg[4].'</td>
                                 <td> '.$reg[5].'</td>
-                                <td> '.$reg[6].'</td>
-                                <td><button id="btnasign" type="button" data-toggle="modal" data-target="#contact-modal" style="margin:3px" class="btn btn-primary" href='.$reg[0].'><font color="#ffffff">Asignar Nuevo No. Contable</font</button></td>                               
+                                <td>1</td>
+                                <td>
+                                <select class="form-control">
+                                <option>Seleccione</option>
+                                <option>pago 2</option>
+                                <option>pago 3</option>
+                                </select>
+                                <input type="text" placeholder="Comentario" class="form-control">
+                                <br>
+                                <select class="form-control">
+                                <option>Seleccione</option>
+                                <option>pago 2</option>
+                                <option>pago 3</option>
+                                </select>
+                                <input type="text" placeholder="Comentario" class="form-control">
+                                
+                                </td>
+
+                                <td>
+                                <select class="form-control">
+                                <option>Seleccione</option>
+                                <option>pago 2</option>
+                                <option>pago 3</option>
+                                </select>
+                                <input type="text" placeholder="Comentario" class="form-control">
+                                <br>
+                                <select class="form-control">
+                                <option>Seleccione</option>
+                                <option>pago 2</option>
+                                <option>pago 3</option>
+                                </select>
+                                <input type="text" placeholder="Comentario" class="form-control">
+                                </td>
+
+                                <td>
+                                <select class="form-control">
+                                <option>Seleccione</option>
+                                <option>pago 2</option>
+                                <option>pago 3</option>
+                                </select>
+                                <input type="text" placeholder="Comentario" class="form-control">
+                                <br>
+                                <select class="form-control">
+                                <option>Seleccione</option>
+                                <option>pago 2</option>
+                                <option>pago 3</option>
+                                </select>
+                                <input type="text" placeholder="Comentario" class="form-control">                                
+                                </td>
+
+                                <td>
+                                <select class="form-control">
+                                <option>Seleccione</option>
+                                <option>pago 2</option>
+                                <option>pago 3</option>
+                                </select>
+                                <input type="text" placeholder="Comentario" class="form-control">
+                                <br>
+                                <select class="form-control">
+                                <option>Seleccione</option>
+                                <option>pago 2</option>
+                                <option>pago 3</option>
+                                </select>
+                                <input type="text" placeholder="Comentario" class="form-control">                                
+                                </td>
+                                
+                                <td> <textarea class="form-control" placeholder="Observaciones" style="resize:none;font-size:12px"></textarea></td>
+                                                             
                             </tr>';      
     }
 }

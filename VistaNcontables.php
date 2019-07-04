@@ -76,7 +76,7 @@
                     </thead>
                     <tbody class="BusquedaRapida">
                         <?php
-                            include 'conexion.php';
+                            
 
                             $sql = "SELECT tblalumno.numcontrol,tblalumno.NombreAlu,tblnocontables.nocontable,tblalumno.TelefonoPersonal,tblalumno.Cel,
                             tblcarrera.NomCarrera,tblperiodo.NombrePeriodo, tblperiodo.ano FROM tblalumno,tblcarrera,tblperiodo,tblnocontables 

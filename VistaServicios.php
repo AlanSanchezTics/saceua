@@ -68,7 +68,7 @@
                     </thead>
                     <tbody class="BusquedaRapida">
                         <?php
-                            include 'conexion.php';
+                            
 
                             $sql = "SELECT * FROM tblservicios WHERE status = 1";
                             $result = mysqli_query($conn, $sql);

@@ -6,13 +6,10 @@
     margin-left: .1rem; 
     margin-right: .1rem; 
 }   
-          </style>
-                
+          </style>                
           <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-              <div class="container">
-                  
-                  <div class="navbar-header">
-                      
+              <div class="container">                  
+                  <div class="navbar-header">                      
                       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navegacion-fm">
                           <span class="sr-only">Desplejar / ocultar menu</span>
                           <span class="icon-bar"></span>
@@ -27,9 +24,17 @@
                           <li class='active'><a href='VistaCajas.php'>Inicio</a></li>
                           <li class='dropdown'>
                             <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button'>
+                                Alumnos<span class='caret'></span></a>
+                              <ul class='dropdown-menu' role='menu'>
+                                  <li><a href='AgregarAlumno.php'>Nuevo Alumno</a></li>
+                            </ul>
+                                  
+                          </li>
+                          <li class='dropdown'>
+                            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button'>
                                 Caja<span class='caret'></span></a>
                               <ul class='dropdown-menu' role='menu'>
-                                  <li><a href='pagoservicios/frm_listadeservicios.php'>Pagar servicio</a></li>
+                                  <li><a href='vistaPagarServicio.php'>Pagar servicio</a></li>
                             </ul>
                                   
                           </li>
