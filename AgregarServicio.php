@@ -20,6 +20,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    
 </head>
 
 <body>
@@ -32,7 +34,7 @@
             <p class="lead">Sistema Academico de Centro de Estudio Universitario ARKOS</p><br>
         </div>
         <hr>
-        <p class="lead">Registro de nuevo servicio</p>
+        <p class="lead">Registro de nuevo concepto</p>
         <hr>
     </section>
     <section class="cuerpo">
@@ -40,14 +42,24 @@
             <form class="form-datos" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" role="form">
                 <span style="font-weight:bold;color:#000080;">Informacion de registro&nbsp;</span>
                 <hr/>
-                <label for="nombre" class="col-lg-3 control-label">Nombre de servicio:</label>
+                <label for="nombre" class="col-lg-3 control-label">Nuevo Concepto:</label>
                 <div class="col-lg-9">
                     <input type="text" placeholder="Nombre" name="name" class="form-control" id="nombre" required><br>
                 </div>
-                <label class="col-lg-3 control-label">Costo:</label>
-                <div class="col-lg-9">
-                    <input type="tel" placeholder="Costo" name="costo" class="form-control" id="costo" pattern="^[0-9]+([.][0-9]+)?$" required><br>
-                </div>
+                
+                <div class="[ form-group ]">
+            <input type="checkbox" name="fancy-checkbox-primary" id="fancy-checkbox-primary" autocomplete="off" />
+            <div class="[ btn-group ]">
+                <label for="fancy-checkbox-primary" class="[ btn btn-primary ]">
+                    <span class="[ glyphicon glyphicon-ok ]"></span>
+                    <span> </span>
+                </label>
+                <label for="fancy-checkbox-primary" class="[ btn btn-default active ]">
+                    ¿Aplicable A Beca?
+                </label>
+            </div>
+        </div>
+
                 <hr>
                 <br><br>
                 <input class="btn btn-primary" type="submit" name="enviar" value="Guardar">
@@ -58,11 +70,18 @@
     <?php
         if(isset($_POST["enviar"])){
             $servicio = $_POST["name"];
-            $costo = $_POST["costo"];
+            if(isset($_POST["fancy-checkbox-primary"])){
+                $descontable = $_POST["fancy-checkbox-primary"];
+            }       
 
-            $sql = "INSERT INTO tblservicios(nombre_servicio, costo_servicio, status) VALUE('{$servicio}', {$costo},1)";
+            if(isset($descontable)){
+                $descontable=1;
+            }else{
+                $descontable=0; 
+            }          
+               
+            $sql = "INSERT INTO tblconceptos(concepto, descontable, status) VALUE('{$servicio}', {$descontable},1)";
             $result = mysqli_query($conn, $sql);
-
             if($result){
                 ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -70,7 +89,7 @@
     />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.1/jquery.jgrowl.min.js"></script>
     <script>
-        $.jGrowl("EL REGISTRO SE GUARDO CON EXITO!", {
+        $.jGrowl("EL Cocnepto SE GUARDO CON EXITO!", {
             life: 3000,
             position: 'bottom-right',
             theme: 'test'
@@ -85,6 +104,29 @@
         }
     </style>
     <?php
+            }else{
+                ?>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.1/jquery.jgrowl.min.css"
+                />
+                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.1/jquery.jgrowl.min.js"></script>
+                <script>
+                    $.jGrowl("Error Al Registrar EL Concepto", {
+                        life: 3000,
+                        position: 'bottom-right',
+                        theme: 'test'
+                    });
+                </script>
+                <style>
+                    .test {
+                        background-color: red;
+                        width: 300px;
+                        height: 80px;
+                        text-align: center;
+                    }
+                </style>
+                <?php
+                
             }
         }
     ?>

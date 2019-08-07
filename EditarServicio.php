@@ -2,7 +2,7 @@
     include 'conexion.php';
     if(isset($_GET['id'])){
         $id = $_GET['id'];
-        $result = mysqli_query($conn,"Select * FROM tblservicios where idservicio=".$id);
+        $result = mysqli_query($conn,"Select * FROM tblconceptos where idconcepto=".$id);
         if(!$result){
                 echo "error de consulta: ".mysqli_error();
                 exit();
@@ -44,23 +44,33 @@
             <p class="lead">Sistema Academico de Centro de Estudio Universitario ARKOS</p><br>
         </div>
         <hr>
-        <p class="lead">editar servicio</p>
+        <p class="lead">Editar concepto</p>
         <hr>
     </section>
     <section class="cuerpo">
         <div class="container">
             <form class="form-datos" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" role="form">
-                <span style="font-weight:bold;color:#000080;">Datos del servicio&nbsp;</span>
+                <span style="font-weight:bold;color:#000080;">Datos del concepto&nbsp;</span>
                 <hr/>
-                <label for="nombre" class="col-lg-3 control-label">Nombre de servicio:</label>
+                <label for="nombre" class="col-lg-3 control-label">Nombre de concepto:</label>
                 <div class="col-lg-9">
                     <input type="hidden" name="idservicio" value="<?php echo $row[0]; ?>">
                     <input type="text" placeholder="Nombre" name="name" value="<?php echo $row[1]; ?>" class="form-control" id="nombre" required><br>
                 </div>
-                <label class="col-lg-3 control-label">Costo:</label>
-                <div class="col-lg-9">
-                    <input type="tel" placeholder="Costo" name="costo" value="<?php echo $row[2]; ?>" class="form-control" id="costo" pattern="^[0-9]+([.][0-9]+)?$" required><br>
-                </div>
+
+
+                <div class="[ form-group ]">
+            <input type="checkbox" name="fancy-checkbox-primary" id="fancy-checkbox-primary" autocomplete="off" <?php if($row[2]==1){echo "checked";}?>/>
+            <div class="[ btn-group ]">
+                <label for="fancy-checkbox-primary" class="[ btn btn-primary ]">
+                    <span class="[ glyphicon glyphicon-ok ]"></span>
+                    <span> </span>
+                </label>
+                <label for="fancy-checkbox-primary" class="[ btn btn-default active ]">
+                    ¿Aplicable A Beca?
+                </label>
+            </div>
+        </div>
                 <hr>
                 <br><br>
                 <input class="btn btn-primary" type="submit" name="enviar" value="Guardar">
@@ -72,9 +82,17 @@
         if(isset($_POST["enviar"])){
             $idservicio = $_POST["idservicio"];
             $servicio = $_POST["name"];
-            $costo = $_POST["costo"];
+            if(isset($_POST["fancy-checkbox-primary"])){
+                $descontable = $_POST["fancy-checkbox-primary"];
+            }       
 
-            $sql = "UPDATE tblservicios SET nombre_servicio = '{$servicio}', costo_servicio = {$costo} WHERE idservicio = {$idservicio}";
+            if(isset($descontable)){
+                $descontable=1;
+            }else{
+                $descontable=0; 
+            }          
+
+            $sql = "UPDATE tblconceptos SET concepto = '{$servicio}', descontable = {$descontable} WHERE idconcepto = {$idservicio}";
             $result = mysqli_query($conn, $sql);
 
             if($result){

@@ -48,10 +48,10 @@
                           </ul>
                           <li class='dropdown'>
                             <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button'>
-                                Servicios <span class='caret'></span></a>
+                                Conceptos <span class='caret'></span></a>
                               <ul class='dropdown-menu' role='menu'>
-                                  <li><a href='vistaServicios.php'>Ver servicios</a></li>
-                                  <li><a href='AgregarServicio.php'>Agregar Servicio</a></li>
+                                  <li><a href='vistaServicios.php'>Ver Conceptos</a></li>
+                                  <li><a href='AgregarServicio.php'>Agregar Conceptos</a></li>
                                   
                               </ul>
                           </li>

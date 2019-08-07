@@ -30,7 +30,7 @@
         <div class="container">
             <h1>SACEUA</h1>
             <p class="lead">Sistema Academico de Centro de Estudio Universitario ARKOS</p><br>
-            <p class="lead">Servicios</p>
+            <p class="lead">Conceptos</p>
         </div>
         <hr>
         <script type="text/javascript">
@@ -46,7 +46,7 @@
                 }(jQuery));
             });
         </script>
-        <p class="lead">Lista de servicios</p>
+        <p class="lead">Lista de conceptos</p>
         <div class="row">
             <div class="col-12 col-md-12">
                 <hr>
@@ -60,9 +60,8 @@
                 <table class="table table-hover">
                     <thead>
                         <tr align='center' class='table table-hover'>
-                            <th>#</th>
-                            <th>Nombre</th>
-                            <th>Costo</th>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Nombre</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -70,16 +69,15 @@
                         <?php
                             
 
-                            $sql = "SELECT * FROM tblservicios WHERE status = 1";
+                            $sql = "SELECT * FROM tblconceptos WHERE status = 1";
                             $result = mysqli_query($conn, $sql);
 
                             while ($reg = mysqli_fetch_array($result)) {
                                 echo '
                                 <tr>
-                                    <th scope="row">'.$reg[0].'</th>
-                                    <td>'.$reg[1].'</td>
-                                    <td> $'.$reg[2].'</td>
-                                    <td><a style="margin:3px" class="btn btn-danger" href=EliminaServicio.php?id='.$reg[0].' data-confirm="¿Está seguro de que desea eliminar el servicio seleccionado?"><font color="#ffffff">Eliminar</font</a> <a style="margin:3px" class="btn btn-primary" href=EditarServicio.php?id='.$reg[0].'&IdUsuario='.$reg[0].'><font color="#ffffff">Editar</font></a></td>
+                                    <th scope="row" class="text-center">'.$reg[0].'</th>
+                                    <td>'.$reg[1].'</td>                                    
+                                    <td class="text-right"><a style="margin:3px" class="btn btn-danger" href=EliminaServicio.php?id='.$reg[0].' data-confirm="¿Está seguro de que desea eliminar el concepto seleccionado?"><font color="#ffffff">Eliminar</font</a> <a style="margin:3px" class="btn btn-primary" href=EditarServicio.php?id='.$reg[0].'&IdUsuario='.$reg[0].'><font color="#ffffff">Editar</font></a></td>
                                 </tr>';
                             }
                         ?>
@@ -92,7 +90,7 @@
                 $('a[data-confirm]').click(function (ev) {
                     var href = $(this).attr('href');
                     if (!$('#confirm-delete').length) {
-                        $('body').append('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-danger text-white">ELIMINAR SERVICIO<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">¿Está seguro de que desea eliminar el servicio seleccionado?</div><div class="modal-footer"><button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button><a class="btn btn-danger text-white" id="dataComfirmOK">Eliminar alumno</a></div></div></div></div>');
+                        $('body').append('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-danger text-white">ELIMINAR CONCEPTO<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">¿Está seguro de que desea eliminar el concepto seleccionado?</div><div class="modal-footer"><button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button><a class="btn btn-danger text-white" id="dataComfirmOK"> Eliminar Concepto</a></div></div></div></div>');
                     }
                     $('#dataComfirmOK').attr('href', href);
                     $('#confirm-delete').modal({ show: true });

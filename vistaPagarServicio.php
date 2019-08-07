@@ -88,9 +88,9 @@
 	</div>
 </div>
     <script>
-    window.addEventListener("load", function() {
-  miformulario.nocontrol.addEventListener("keypress", soloNumeros, false);
-  contact.cntbl.addEventListener("keypress", soloNumeros, false);
+    //window.addEventListener("load", function() {
+  //miformulario.nocontrol.addEventListener("keypress", soloNumeros, false);
+  //contact.cntbl.addEventListener("keypress", soloNumeros, false);
 });
 
 function soloNumeros(e){
@@ -123,12 +123,11 @@ function soloNumeros(e){
                     </div>
                 </form>
                 <hr>
-                <table class="table table-hover">
+                <table class="table table-hover" id="tablaservicio">
                     <thead>
                         <tr class='table table-hover'>
                             <th class="text-center">Número de control</th>
                             <th class="text-center">Nombre</th>
-                            <th class="text-center">No. Contable</th>
                             <th class="text-center">Carrera</th>
                             <th class="text-center">Nombre Del Periodo</th>
                             <th class="text-center">Reinscripcion</th>
@@ -149,24 +148,15 @@ function soloNumeros(e){
           }else{    
     $nocontrol=$_POST["nocontrol"];
 
-    $sql = "SELECT tblnocontables.nocontable from tblnocontables,tblalumno where tblalumno.numcontrol=$nocontrol and tblalumno.idalumno=tblnocontables.idalumno and tblnocontables.status=1";
-                        $result = mysqli_query($conn, $sql);
-                        $num_rows = mysqli_num_rows($result);
-                        if($num_rows<=0){
-                            $nocontablesql=mysqli_fetch_array($result);                                                     
-                            $isassgigned="No Asignado";                            
-                        }else{
-                            $nocontablesql=mysqli_fetch_array($result);
-                            $isassgigned=$nocontablesql[0];
-                        }
-
 
     $sql = "SELECT tblalumno.numcontrol,tblalumno.NombreAlu,tblalumno.TelefonoPersonal,
     tblalumno.Cel, tblcarrera.NomCarrera,tblperiodo.NombrePeriodo, tblperiodo.ano FROM 
     tblalumno,tblcarrera,tblperiodo where tblalumno.IdCarrera=tblcarrera.IdCarrera and 
-    tblalumno.Periodo=tblperiodo.IdPeriodo and tblalumno.numcontrol=$nocontrol";
+    tblalumno.Periodo=tblperiodo.IdPeriodo and tblalumno.numcontrol='$nocontrol'";
 
                         $result = mysqli_query($conn, $sql);
+          
+
                         $num_rows = mysqli_num_rows($result);
                         
                         if($num_rows<=0){                           
@@ -180,10 +170,11 @@ function soloNumeros(e){
                             <tr>
                                 <th scope="row">'.$reg[0].'</th>
                                 <td>'.$reg[1].'</td>
-                                <td> '.$isassgigned.' </td>
-                                <td> '.$reg[2].'</td>
+                                <td> '.$reg[4].'</td>
                                 <td> '.$reg[5].'</td>
-                                <td>1</td>
+                                <td>
+                                <input type="text" placeholder="Pago de reinscripcion" class="form-control">                               
+                                </td>
                                 <td>
                                 <select class="form-control">
                                 <option>Seleccione</option>
@@ -191,7 +182,10 @@ function soloNumeros(e){
                                 <option>pago 3</option>
                                 </select>
                                 <input type="text" placeholder="Comentario" class="form-control">
-                                <br>
+                               
+                                </td>
+
+                                <td>
                                 <select class="form-control">
                                 <option>Seleccione</option>
                                 <option>pago 2</option>
@@ -199,7 +193,9 @@ function soloNumeros(e){
                                 </select>
                                 <input type="text" placeholder="Comentario" class="form-control">
                                 
-                                </td>
+
+
+                                
 
                                 <td>
                                 <select class="form-control">
@@ -208,14 +204,7 @@ function soloNumeros(e){
                                 <option>pago 3</option>
                                 </select>
                                 <input type="text" placeholder="Comentario" class="form-control">
-                                <br>
-                                <select class="form-control">
-                                <option>Seleccione</option>
-                                <option>pago 2</option>
-                                <option>pago 3</option>
-                                </select>
-                                <input type="text" placeholder="Comentario" class="form-control">
-                                </td>
+                                
 
                                 <td>
                                 <select class="form-control">
@@ -224,34 +213,19 @@ function soloNumeros(e){
                                 <option>pago 3</option>
                                 </select>
                                 <input type="text" placeholder="Comentario" class="form-control">
-                                <br>
-                                <select class="form-control">
-                                <option>Seleccione</option>
-                                <option>pago 2</option>
-                                <option>pago 3</option>
-                                </select>
-                                <input type="text" placeholder="Comentario" class="form-control">                                
-                                </td>
-
-                                <td>
-                                <select class="form-control">
-                                <option>Seleccione</option>
-                                <option>pago 2</option>
-                                <option>pago 3</option>
-                                </select>
-                                <input type="text" placeholder="Comentario" class="form-control">
-                                <br>
-                                <select class="form-control">
-                                <option>Seleccione</option>
-                                <option>pago 2</option>
-                                <option>pago 3</option>
-                                </select>
-                                <input type="text" placeholder="Comentario" class="form-control">                                
-                                </td>
+                                
                                 
                                 <td> <textarea class="form-control" placeholder="Observaciones" style="resize:none;font-size:12px"></textarea></td>
                                                              
-                            </tr>';      
+                            </tr>
+                            <tr>
+                            <td colspan="10"><input type="button" class="form-control btn-info" style="font-size:22px" value="+" onclick="agregarFila()"></td>
+                            
+                            </tr>
+                            
+                            
+                            
+                            ';      
     }
 }
 }
@@ -261,6 +235,19 @@ function soloNumeros(e){
                     </tbody>
 
                     <script>
+
+function agregarFila(){
+var table = document.getElementById("tablaservicio");
+var rowCount = table.rows.length;
+table.deleteRow(rowCount -1);
+  document.getElementById("tablaservicio").insertRow(-1).innerHTML = '<td></td><td></td><td></td><td></td><td></td><td><select class="form-control"><option>Seleccione</option><option>pago 2</option><option>pago 3</option></select><input type="text" placeholder="Comentario" class="form-control"></td>';
+  document.getElementById("tablaservicio").insertRow(-1).innerHTML = '<td colspan="10"><input type="button" class="form-control btn-info" style="font-size:22px" value="+" onclick="agregarFila()"></td>';
+
+}
+
+
+
+
                     $( "#btnasign" ).click(function() {
                            var href =$("#btnasign").attr("href");
                            $("#ctrl").val(href);
