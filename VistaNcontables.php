@@ -10,8 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SACEUA | Lista De Numeros Contables Asignados</title>
-
+    <title>SACEUA | Lista De Numeros Contables No Asignados</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./Estilos/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -23,6 +22,23 @@
 </head>
 
 <body>
+    <script>
+    window.addEventListener("load", function() {
+  
+});
+
+function soloNumeros(e){
+  var key = window.event ? e.which : e.keyCode;
+  if (key < 48 || key > 57) {
+    e.preventDefault();
+  }
+}
+
+
+    </script> 
+
+
+
     <?php
           include 'Menu.php'; 
        ?>
@@ -33,41 +49,28 @@
             <p class="lead">Numeros Contables</p>
         </div>
         <hr>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                (function ($) {
-                    $('#FiltrarContenido').keyup(function () {
-                        var ValorBusqueda = new RegExp($(this).val(), 'i');
-                        $('.BusquedaRapida tr').hide();
-                        $('.BusquedaRapida tr').filter(function () {
-                            return ValorBusqueda.test($(this).text());
-                        }).show();
-                    })
-                }(jQuery));
-            });
-        </script>
+        
         <p class="lead">Numeros Contables Asignados</p>
         <div class="row">
             <div class="col-12 col-md-12">
                 <hr>
-                <form action='' class='navbar-form navbar-center' role='search'>
+                <form name="miformulario" action='vistaNcontables.php' method='post' class='navbar-form navbar-center' role='search'>
                     <div class='form-group'>
                         <label for="nombre">Buscador:</label>
-                        <input id="FiltrarContenido" type="text" class="form-control" placeholder="Ingrese datos" aria-label="Servicio" aria-describedby="basic-addon1">
+                        <input id="nocontrol" name= "nocontrol" type="text" class="form-control" placeholder="Numero De Control" aria-label="Servicio" aria-describedby="basic-addon1">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
                     </div>
                 </form>
                 <hr>
                 <table class="table table-hover">
                     <thead>
                         <tr align='center' class='table table-hover'>
-                            <th>Número de control</th>
-                            <th>Nombre</th>
-                            <th>No. Contable</th>
-                            <th>Telefono Personal</th>
-                            <th>Telefono Celular</th>
-                            <th>Carrera</th>
-                            <th>Nombre Del Periodo</th>
-                            <th>Año</th>
+                            <th class="text-center">Número de control</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Carrera</th>
+                            <th class="text-center">No. contable</th>
+                            <th class="text-center">Periodo</th>
+                            <th class="text-center">Año</th>
                             <th></th>
 
 
@@ -75,33 +78,49 @@
                         </tr>
                     </thead>
                     <tbody class="BusquedaRapida">
-                        <?php
-                            
+                    <?php
+    
+    if(isset($_POST["nocontrol"])){
+            
+    if(is_null($_POST["nocontrol"]) || empty($_POST["nocontrol"])){
+       
+   }else{   
 
-                            $sql = "SELECT tblalumno.numcontrol,tblalumno.NombreAlu,tblnocontables.nocontable,tblalumno.TelefonoPersonal,tblalumno.Cel,
-                            tblcarrera.NomCarrera,tblperiodo.NombrePeriodo, tblperiodo.ano FROM tblalumno,tblcarrera,tblperiodo,tblnocontables 
-                            where tblalumno.IdCarrera=tblcarrera.IdCarrera and 
-                            tblalumno.Periodo=tblperiodo.IdPeriodo and tblalumno.IdAlumno=tblnocontables.idAlumno";
+    $nocontrol=$_POST["nocontrol"];
+    $sql = "SELECT tblalumno.numcontrol,tblalumno.NombreAlu, tblcarrera.NomCarrera, tblalumno.nocontable,tblperiodo.NombrePeriodo, tblperiodo.ano FROM 
+    tblalumno,tblcarrera,tblperiodo where tblalumno.IdCarrera=tblcarrera.IdCarrera and 
+    tblalumno.Periodo=tblperiodo.IdPeriodo AND tblalumno.numcontrol='$nocontrol'";
 
-                            $result = mysqli_query($conn, $sql);
-
-                            while ($reg = mysqli_fetch_array($result)) {
+                        $result = mysqli_query($conn, $sql);
+                        $num_rows = mysqli_num_rows($result);
+                        
+                        if($num_rows<=0){                           
+                            echo '<script language="javascript">
+                            alert("Alumno No Encontrado")
+                           </script>';                           
+                        }
+                        $reg = mysqli_fetch_array($result);
+                        if($reg[3]==0){
+                            echo '<script language="javascript">
+                            alert("Alumno Sin Numero Contable Asignado")
+                           </script>';     
+                        }else{                           
                                 echo '
                                 <tr>
-                                    <th scope="row">'.$reg[0].'</th>
-                                    <td>'.$reg[1].'</td>
-                                    <td> '.$reg[2].'</td>
-                                    <td> '.$reg[3].'</td>
-                                    <td> '.$reg[4].'</td>
-                                    <td> '.$reg[5].'</td>
-                                    <td> '.$reg[6].'</td>
-                                    <td> '.$reg[7].'</td>
-                                    <td><a style="margin:3px" class="btn btn-danger" href=EliminaServicio.php?id='.$reg[0].' data-confirm="¿Está seguro de que desea eliminar el servicio seleccionado?"><font color="#ffffff">Eliminar</font</a></td> 
-                                    
-                                    
-                                </tr>';
+                                    <th scope="row" class="text-center">'.$reg[0].'</th>
+                                    <td class="text-center">'.$reg[1].'</td>
+                                    <td class="text-center">'.$reg[2].'</td>
+                                    <td class="text-center">'.$reg[3].'</td>
+                                    <td class="text-center"> '.$reg[4].'</td>
+                                    <td class="text-center"> '.$reg[5].'</td>
+                                </tr>'; 
                             }
-                        ?>
+
+                        
+}
+}
+?>
+                       
                     </tbody>
                 </table>
             </div>

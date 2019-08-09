@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SACEUA | Lista De Numeros Contables No Asignados</title>
+    <title>SACEUA | Lista De Becas No Asignadas</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./Estilos/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -46,11 +46,11 @@ function soloNumeros(e){
         <div class="container">
             <h1>SACEUA</h1>
             <p class="lead">Sistema Academico de Centro de Estudio Universitario ARKOS</p><br>
-            <p class="lead">Numeros Contables</p>
+            <p class="lead">Becas</p>
         </div>
         <hr>
         
-        <p class="lead">Numeros Contables Asignados</p>
+        <p class="lead">Alumnos Becados</p>
         <div class="row">
             <div class="col-12 col-md-12">
                 <hr>
@@ -65,12 +65,12 @@ function soloNumeros(e){
                 <table class="table table-hover">
                     <thead>
                         <tr align='center' class='table table-hover'>
-                            <th>Número de control</th>
-                            <th>Nombre</th>
-                            <th>Carrera</th>
-                            <th>Porcentaje</th>
-                            <th>Periodo</th>
-                            <th>Año</th>
+                            <th class="text-center">Número de control</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Carrera</th>
+                            <th class="text-center">Porcentaje</th>
+                            <th class="text-center">Periodo</th>
+                            <th class="text-center">Año</th>
                             <th></th>
 
 
@@ -89,7 +89,7 @@ function soloNumeros(e){
     $nocontrol=$_POST["nocontrol"];
     $sql = "SELECT tblalumno.numcontrol,tblalumno.NombreAlu, tblcarrera.NomCarrera, tblbecas.porcentaje ,tblperiodo.NombrePeriodo, tblperiodo.ano FROM 
     tblalumno,tblcarrera,tblperiodo, tblbecas where tblalumno.IdCarrera=tblcarrera.IdCarrera and 
-    tblalumno.Periodo=tblperiodo.IdPeriodo AND tblbecas.idAlumno = tblalumno.IdAlumno AND tblbecas.idperiodo = tblperiodo.IdPeriodo and tblalumno.numcontrol=$nocontrol";
+    tblalumno.Periodo=tblperiodo.IdPeriodo AND tblbecas.idAlumno = tblalumno.IdAlumno AND tblbecas.idperiodo = tblperiodo.IdPeriodo and tblalumno.numcontrol='$nocontrol'";
 
                         $result = mysqli_query($conn, $sql);
                         $num_rows = mysqli_num_rows($result);
@@ -103,13 +103,12 @@ function soloNumeros(e){
                         while ($reg = mysqli_fetch_array($result)) {
                             echo '
                             <tr>
-                                <th scope="row">'.$reg[0].'</th>
-                                <td>'.$reg[1].'</td>
-                                <td>'.$reg[2].'</td>
-                                <td> '.$reg[3].'</td>
-                                <td> '.$reg[4].'</td>
-                                <td> '.$reg[5].'</td>
-                                <td><a style="margin:3px" class="btn btn-primary" href=EditarBeca.php?id='.$reg[0].'><font color="#ffffff">Editar</font</a> <a style="margin:3px" class="btn btn-danger" href=EliminarBeca.php?id='.$reg[0].' data-confirm="¿Está seguro de que desea eliminar el servicio seleccionado?"><font color="#ffffff">Eliminar</font</a></td>                               
+                                <th scope="row" class="text-center">'.$reg[0].'</th>
+                                <td class="text-center">'.$reg[1].'</td>
+                                <td class="text-center">'.$reg[2].'</td>
+                                <td class="text-center"> Alumno Becado Al '.$reg[3].'%</td>
+                                <td class="text-center"> '.$reg[4].'</td>
+                                <td class="text-center"> '.$reg[5].'</td>
                             </tr>';      
     }
 }

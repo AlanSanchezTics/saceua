@@ -68,7 +68,7 @@
                                 Becas <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href='vistaBecas.php'>Ver Alumnos Becados</a></li>
-                                    <li><a href='becas/'>Asignar Becas</a></li>
+                                    <li><a href='VistaAsignarBecas.php'>Asignar Becas</a></li>
                                 </ul>
                           </li>
                             <li class='dropdown'>

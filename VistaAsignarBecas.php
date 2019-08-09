@@ -5,18 +5,36 @@
     $numerodecontrol=$_POST['ctrl'];
     $numerocontable=$_POST['cntbl'];
 
-    $sql = "SELECT idAlumno from tblalumno where numcontrol='$numerodecontrol' and status='Activo'";
+    $sql = "SELECT idalumno from tblalumno where numcontrol='$numerodecontrol' and status='Activo'";
     $result = mysqli_query($conn, $sql);
-    $idalumno = mysqli_fetch_array($result); 
-                          
-            $sql = "UPDATE tblalumno SET nocontable =$numerocontable WHERE tblalumno.idAlumno=$idalumno[0]";
+    $idalumno = mysqli_fetch_array($result);  
+
+    $sql = "SELECT Periodo from tblalumno where numcontrol='$numerodecontrol' and status='Activo'";
+    $result = mysqli_query($conn, $sql);
+    $pperiodo = mysqli_fetch_array($result);  
+    
+    $sql = "SELECT tblbecas.porcentaje,tblbecas.idAlumno from tblbecas,tblalumno where tblalumno.numcontrol='$numerodecontrol' 
+    and tblbecas.idAlumno=tblalumno.idalumno and tblbecas.status=1";
+    $result = mysqli_query($conn, $sql);
+    $hayono = mysqli_num_rows($result);    
+        if($hayono>0){            
+            $sql = "UPDATE tblbecas SET porcentaje =$numerocontable WHERE tblbecas.idAlumno=$idalumno[0]";
             $result = mysqli_query($conn, $sql);
             if($result){
-                echo "<script type='text/javascript'>alert('Numero Contable Actualizado Correctamente');</script>";
+                echo "<script type='text/javascript'>alert('Porcentaje De Beca Actualizado Correctamente');</script>";
             }else{
-                echo "<script type='text/javascript'>alert('No Se Pudo Actualizar Numero Contable');</script>";  
-            }          
-            };
+                echo "<script type='text/javascript'>alert('No Se Pudo Actualizar El Procentaje De Beca');</script>";
+            }      
+        }else{
+            $sql = "insert into tblbecas(IdAlumno,porcentaje,idperiodo,status) values($idalumno[0],$numerocontable,$pperiodo[0],1)";
+            $result = mysqli_query($conn, $sql);
+            if($result){
+                echo "<script type='text/javascript'>alert('Porcentaje De Beca Asignado Correctamente');</script>";
+            }else{
+                echo "<script type='text/javascript'>alert('No Se Pudo Asignar Porcentaje De Beca');</script>";
+            }              
+        }
+    };
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,6 +67,18 @@
 </head>
 
 <body>
+<script>
+    window.addEventListener("load", function() {
+    contact.cntbl.addEventListener("keypress", soloNumeros, false);
+});
+
+function soloNumeros(e){
+  var key = window.event ? e.which : e.keyCode;
+  if (key < 48 || key > 57) {
+    e.preventDefault();
+  }
+}
+    </script> 
 
 
 <div id="contact-modal" class="modal fade" role="dialog">
@@ -56,13 +86,13 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<a class="close" data-dismiss="modal">×</a>
-				<h3>Asignar Nuevo Numero Contable</h3>
+				<h3>Asignar Nuevo Porcentaje De Beca</h3>
 			</div>
 			<form id="contactForm" name="contact" role="form" method="POST">
 				<div class="modal-body">				
 					<div class="form-group">
-						<label for="name">Ingrese Numero Contable</label>
-						<input type="text" name="cntbl" id="cntbl" class="form-control">
+						<label for="name">Ingrese Nuevo Porcentaje</label>
+						<input type="text" name="cntbl" id="cntbl" class="form-control" maxlength=3>
                         <input type="hidden" name="ctrl" id="ctrl" class="form-control">
 					</div>
 								
@@ -75,19 +105,7 @@
 		</div>
 	</div>
 </div>
-    <script>
-    window.addEventListener("load", function() {
-  miformulario.nocontrol.addEventListener("keypress", soloNumeros, false);
-  contact.cntbl.addEventListener("keypress", soloNumeros, false);
-});
-
-function soloNumeros(e){
-  var key = window.event ? e.which : e.keyCode;
-  if (key < 48 || key > 57) {
-    e.preventDefault();
-  }
-}
-    </script> 
+    
     <?php
           include 'Menu.php'; 
        ?>
@@ -95,15 +113,15 @@ function soloNumeros(e){
         <div class="container">
             <h1>SACEUA</h1>
             <p class="lead">Sistema Academico de Centro de Estudio Universitario ARKOS</p><br>
-            <p class="lead">Numeros Contables</p>
+            <p class="lead">Aignacion De Becas</p>
         </div>
         <hr>
         
-        <p class="lead">Numeros Contables Asignados</p>
+        <p class="lead">Buscar Alumno</p>
         <div class="row">
             <div class="col-12 col-md-12">
                 <hr>
-                <form name="miformulario" action='vistaAsignarNContables.php' method='post' class='navbar-form navbar-center' role='search'>
+                <form name="miformulario" action='VistaAsignarBecas.php' method='post' class='navbar-form navbar-center' role='search'>
                     <div class='form-group'>
                         <label for="nombre">Buscador:</label>
                         <input id="nocontrol" name= "nocontrol" type="text" class="form-control" placeholder="Numero De Control" aria-label="Servicio" aria-describedby="basic-addon1">
@@ -114,14 +132,14 @@ function soloNumeros(e){
                 <table class="table table-hover">
                     <thead>
                         <tr align='center' class='table table-hover'>
-                            <th>Número de control</th>
-                            <th>Nombre</th>
-                            <th>No. Contable</th>
-                            <th>Telefono Personal</th>
-                            <th>Telefono Celular</th>
-                            <th>Carrera</th>
-                            <th>Nombre Del Periodo</th>
-                            <th>Año</th>
+                            <th class="text-center">Número de control</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Porcentaje De Beca</th>
+                            <th class="text-center">Telefono Personal</th>
+                            <th class="text-center">Telefono Celular</th>
+                            <th class="text-center">Carrera</th>
+                            <th class="text-center">Nombre Del Periodo</th>
+                            <th class="text-center">Año</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -135,14 +153,14 @@ function soloNumeros(e){
           }else{    
     $nocontrol=$_POST["nocontrol"];
 
-    $sql = "SELECT tblalumno.nocontable from tblalumno where tblalumno.numcontrol='$nocontrol' and tblalumno.status='Activo'";
+    $sql = "SELECT tblbecas.porcentaje from tblbecas,tblalumno where tblalumno.numcontrol='$nocontrol' and tblalumno.idalumno=tblbecas.idAlumno and tblbecas.status=1";
                         $result = mysqli_query($conn, $sql);
                         $num_rows = mysqli_num_rows($result);
-                        $nocontablesql=mysqli_fetch_array($result);
-
-                        if($nocontablesql[0]==0){                                                                                 
-                            $isassgigned="No Asignado";                            
+                        if($num_rows<=0){
+                            $nocontablesql=mysqli_fetch_array($result);                                                     
+                            $isassgigned="No Becado";                            
                         }else{
+                            $nocontablesql=mysqli_fetch_array($result);
                             $isassgigned=$nocontablesql[0];
                         }
 
@@ -164,15 +182,21 @@ function soloNumeros(e){
                         while ($reg = mysqli_fetch_array($result)) {
                             echo '
                             <tr>
-                                <th scope="row">'.$reg[0].'</th>
-                                <td>'.$reg[1].'</td>
-                                <td> '.$isassgigned.' </td>
-                                <td> '.$reg[2].'</td>
-                                <td> '.$reg[3].'</td>
-                                <td> '.$reg[4].'</td>
-                                <td> '.$reg[5].'</td>
-                                <td> '.$reg[6].'</td>
-                                <td><button id="btnasign" type="button" data-toggle="modal" data-target="#contact-modal" style="margin:3px" class="btn btn-primary" href='.$reg[0].'><font color="#ffffff">Asignar Nuevo No. Contable</font</button></td>                               
+                                <th scope="row" class="text-center">'.$reg[0].'</th>
+                                <td class="text-center">'.$reg[1].'</td>';
+                                if($isassgigned=='No Becado'){
+                                    echo '<td class="text-center"> '.$isassgigned.' </td>';
+                                }else{
+                                    echo '<td class="text-center"> '.$isassgigned.' %</td>';
+                                };
+                                
+                            echo 
+                                '<td class="text-center"> '.$reg[2].'</td>
+                                <td class="text-center"> '.$reg[3].'</td>
+                                <td class="text-center"> '.$reg[4].'</td>
+                                <td class="text-center"> '.$reg[5].'</td>
+                                <td class="text-center"> '.$reg[6].'</td>
+                                <td class="text-center"><button id="btnasign" type="button" data-toggle="modal" data-target="#contact-modal" style="margin:3px" class="btn btn-primary" href='.$reg[0].'><font color="#ffffff">Asignar Porcentaje De Beca</font</button></td>                               
                             </tr>';      
     }
 }
